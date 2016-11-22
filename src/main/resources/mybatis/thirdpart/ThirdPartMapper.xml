@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xx.jersey.demo.dao.ThirdPartMapper">
+
+    <resultMap id="BaseResult" type="com.xx.jersey.demo.model.ThirdPart">
+        <id property="id" column="id" javaType="Integer"></id>
+        <result property="name" column="name" javaType="String"></result>
+        <result property="clientId" column="client_id" javaType="String"></result>
+        <result property="clientSecret" column="client_secret" javaType="String"></result>
+        <result property="redirectUrl" column="redirect_url" javaType="String"></result>
+        <result property="createTime" column="create_time" javaType="Date"/>
+    </resultMap>
+
+    <select id="findByName" resultMap="BaseResult">
+        select *
+        from third_party_info
+        where `name` = #{name}
+    </select>
+
+    <insert id="insert" parameterType="map" useGeneratedKeys="true" keyProperty="id">
+        insert into third_party_info(`name`,`client_id`,`client_secret`,`redirect_url`,`create_time`)
+        VALUES (#{name},#{clientId},#{clientSecret},#{redirectUrl},#{createTime})
+    </insert>
+
+    <delete id="delete" parameterType="integer">
+        delete from third_party_info
+        where id = #{id}
+    </delete>
+
+    <select id="findById" parameterType="integer" resultMap="BaseResult">
+        select *
+        from third_party_info
+        where `name` = #{id}
+    </select>
+</mapper>
